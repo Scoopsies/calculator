@@ -2,10 +2,27 @@
 
 const Buttons = ({screen, setScreen}) => {
 
-    const backspace = () => {
+    const backSpace = () => {
         screen.pop();
         setScreen([...screen]);
     }
+
+    const equals = () => {
+        let nums = '';
+        const newStatement = [];
+        for (let i = 0; i < screen.length; i++) {
+            if (typeof screen[i] === 'number') nums += screen[i];
+            if (typeof screen[i] !== 'number') {
+                newStatement.push(nums * 1);
+                nums = '';
+                newStatement.push(screen[i])
+            }
+        }
+        if (nums.length > 0) newStatement.push(nums * 1)
+        setScreen([...newStatement])
+        setScreen([eval(screen.join(''))])
+    }
+
 
   return (
         <>
@@ -17,7 +34,7 @@ const Buttons = ({screen, setScreen}) => {
             <button onClick={() => setScreen([...screen, 4])}>4</button>
             <button onClick={() => setScreen([...screen, 5])}>5</button>
             <button onClick={() => setScreen([...screen, 6])}>6</button>
-            <button onClick={() => setScreen([...screen, ' x '])}>x</button>
+            <button onClick={() => setScreen([...screen, ' * '])}>*</button>
             <br/>
             <button onClick={() => setScreen([...screen, 1])}>1</button>
             <button onClick={() => setScreen([...screen, 2])}>2</button>
@@ -26,12 +43,12 @@ const Buttons = ({screen, setScreen}) => {
             <br/>
             <button onClick={() => setScreen([...screen, 0])}>0</button>
             <button onClick={() => setScreen([...screen, '.'])}>.</button>
-            <button onClick={() => backspace() }>⬅️</button>
+            <button onClick={() => backSpace() }>⬅️</button>
             <button onClick={() => setScreen([...screen, ' - '])}>-</button>
             <br />
             <button onClick={() => setScreen([])}>Clear</button>
             <span/>
-            <button>=</button>
+            <button onClick={() => equals()}>=</button>
             
             <br />
             <br />
